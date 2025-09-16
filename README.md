@@ -75,6 +75,46 @@ bot.onText(/\/yourcommand/, (msg) => {
 - **Polling errors:** Ensure your internet connection is stable
 - **Permission issues:** Make sure your bot has the necessary permissions
 
+## Deployment on Render
+
+This bot is configured for easy deployment on [Render](https://render.com):
+
+### **One-Click Deploy:**
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy)
+
+### **Manual Deployment:**
+
+1. **Fork this repository** to your GitHub account
+2. **Sign up/Login** to [Render](https://render.com)
+3. **Create a new Web Service:**
+   - Connect your GitHub account
+   - Select this repository
+   - Choose the following settings:
+     - **Environment:** Node
+     - **Build Command:** `npm install`
+     - **Start Command:** `npm start`
+     - **Plan:** Free (or paid for better performance)
+
+4. **Set Environment Variables:**
+   - Go to your service's Environment tab
+   - Add `BOT_TOKEN` with your Telegram bot token
+   - Add `NODE_ENV` with value `production`
+
+5. **Deploy:**
+   - Click "Create Web Service"
+   - Wait for deployment to complete
+   - Your bot will be live and accessible via the provided URL
+
+### **Health Checks:**
+- **Root endpoint:** `https://your-app.onrender.com/` - Shows bot status
+- **Health check:** `https://your-app.onrender.com/health` - For monitoring
+
+### **Important Notes:**
+- The bot uses **polling** mode, which works well with Render
+- Free tier has **sleep mode** - bot may take a few seconds to wake up
+- Consider upgrading to paid plan for 24/7 uptime
+- Monitor logs in Render dashboard for any issues
+
 ## License
 
 ISC

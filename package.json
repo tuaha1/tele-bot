@@ -5,6 +5,7 @@
   "scripts": {
     "start": "node bot.js",
     "dev": "node bot.js",
+    "build": "echo 'No build step required'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -13,6 +14,10 @@
   "description": "A simple Telegram bot built with Node.js",
   "dependencies": {
     "dotenv": "^17.2.2",
+    "express": "^5.1.0",
     "node-telegram-bot-api": "^0.66.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
