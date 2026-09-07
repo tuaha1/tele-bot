@@ -1,23 +1,22 @@
 {
-  "name": "tele-bot",
-  "version": "1.0.0",
+  "name": "whatsapp-reminder-bot",
+  "version": "2.0.0",
   "main": "bot.js",
+  "type": "module",
   "scripts": {
     "start": "node bot.js",
-    "dev": "node bot.js",
-    "build": "echo 'No build step required'",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "node bot.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["whatsapp", "reminder", "baileys"],
   "license": "ISC",
-  "description": "A simple Telegram bot built with Node.js",
+  "description": "Personal WhatsApp reminder bot using Baileys",
   "dependencies": {
+    "baileys": "^7.0.0",
     "dotenv": "^17.2.2",
     "express": "^5.1.0",
-    "node-telegram-bot-api": "^0.66.0"
+    "pino": "^9.7.0"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=20.0.0"
   }
 }
