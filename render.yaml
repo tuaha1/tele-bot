@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: tele-bot
+    name: whatsapp-reminder-bot
     env: node
     plan: free
     buildCommand: npm install
@@ -8,7 +8,9 @@ services:
     envVars:
       - key: NODE_ENV
         value: production
-      - key: BOT_TOKEN
-        sync: false  # This will be set manually in Render dashboard
+      - key: TZ
+        value: Asia/Kolkata
+      - key: WHATSAPP_PHONE_NUMBER
+        sync: false
     healthCheckPath: /health
     autoDeploy: true
