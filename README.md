@@ -1,120 +1,67 @@
-# Telegram Bot
+# WhatsApp Reminder Bot
 
-A simple Telegram bot built with Node.js using the `node-telegram-bot-api` library.
+A personal WhatsApp reminder bot built with Node.js and Baileys. It is intended for small personal workloads (for example, 5–10 reminders/day).
 
 ## Features
 
-- 🤖 Basic bot functionality with polling
-- 📝 Multiple command handlers (/start, /help, /echo, /hello)
-- 🔒 Environment variable configuration for bot token
-- 📱 Responsive to text messages
+- 💬 WhatsApp Web connection using Baileys
+- 🔐 Phone-number pairing code (no QR required)
+- ⏰ One-time reminders
+- 🔁 Daily recurring reminders
+- 📋 List reminders
+- ❌ Cancel reminders
+- 💾 JSON persistence for reminders
+- 🌏 Asia/Kolkata timezone by default
+- ❤️ `/health` endpoint for hosting platforms
 
-## Prerequisites
+## Important
 
-- Node.js (v14 or higher)
-- A Telegram bot token from [@BotFather](https://t.me/botfather)
+This uses an unofficial WhatsApp Web client. Use a separate/test WhatsApp account if possible. WhatsApp may change its protocols or restrict accounts using unofficial automation.
 
-## Setup
+## Local setup
 
-1. **Clone or download this project**
-
-2. **Install dependencies:**
-   ```bash
-   npm install
-   ```
-
-3. **Get a bot token:**
-   - Message [@BotFather](https://t.me/botfather) on Telegram
-   - Create a new bot with `/newbot`
-   - Follow the instructions to get your bot token
-
-4. **Configure environment variables:**
-   - Open the `.env` file
-   - Replace `your_bot_token_here` with your actual bot token:
-   ```
-   BOT_TOKEN=1234567890:ABCdefGHIjklMNOpqrsTUVwxyz
-   ```
-
-5. **Run the bot:**
-   ```bash
-   node bot.js
-   ```
-
-## Available Commands
-
-- `/start` - Show welcome message and available commands
-- `/help` - Display help information
-- `/echo <message>` - Echo back your message
-- `/hello` - Get a friendly greeting
-
-## Project Structure
-
-```
-tele-bot/
-├── bot.js          # Main bot file
-├── package.json    # Node.js dependencies and scripts
-├── .env           # Environment variables (create this)
-├── .gitignore     # Git ignore file
-└── README.md      # This file
+```bash
+npm install
 ```
 
-## Development
+Set the phone number that will own the bot connection:
 
-To add new commands, edit the `bot.js` file and add new `bot.onText()` handlers:
-
-```javascript
-bot.onText(/\/yourcommand/, (msg) => {
-    const chatId = msg.chat.id;
-    bot.sendMessage(chatId, 'Your response here');
-});
+```bash
+WHATSAPP_PHONE_NUMBER=919876543210
+TZ=Asia/Kolkata
 ```
 
-## Troubleshooting
+Then run:
 
-- **Bot not responding:** Check that your bot token is correct in the `.env` file
-- **Polling errors:** Ensure your internet connection is stable
-- **Permission issues:** Make sure your bot has the necessary permissions
+```bash
+npm start
+```
 
-## Deployment on Render
+The terminal will print a **pairing code**. On the WhatsApp phone:
 
-This bot is configured for easy deployment on [Render](https://render.com):
+**WhatsApp → Linked devices → Link a device → Link with phone number**
 
-### **One-Click Deploy:**
-[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy)
+Enter the pairing code shown by the bot.
 
-### **Manual Deployment:**
+After the first successful pairing, the credentials are stored under `auth_info/` and should never be committed.
 
-1. **Fork this repository** to your GitHub account
-2. **Sign up/Login** to [Render](https://render.com)
-3. **Create a new Web Service:**
-   - Connect your GitHub account
-   - Select this repository
-   - Choose the following settings:
-     - **Environment:** Node
-     - **Build Command:** `npm install`
-     - **Start Command:** `npm start`
-     - **Plan:** Free (or paid for better performance)
+## Commands / examples
 
-4. **Set Environment Variables:**
-   - Go to your service's Environment tab
-   - Add `BOT_TOKEN` with your Telegram bot token
-   - Add `NODE_ENV` with value `production`
+```text
+Remind me to study at 7 PM
+Remind me every day at 8 PM to study
+Remind me tomorrow at 10 AM to submit assignment
+reminders
+cancel 2
+help
+```
 
-5. **Deploy:**
-   - Click "Create Web Service"
-   - Wait for deployment to complete
-   - Your bot will be live and accessible via the provided URL
+## Deployment
 
-### **Health Checks:**
-- **Root endpoint:** `https://your-app.onrender.com/` - Shows bot status
-- **Health check:** `https://your-app.onrender.com/health` - For monitoring
+The repository contains `render.yaml` for a Node web service. Set `WHATSAPP_PHONE_NUMBER` and deploy. **Persistent storage is strongly recommended for production** because the WhatsApp authentication directory must survive restarts. Without persistent storage, you may need to pair the account again after a restart/redeploy.
 
-### **Important Notes:**
-- The bot uses **polling** mode, which works well with Render
-- Free tier has **sleep mode** - bot may take a few seconds to wake up
-- Consider upgrading to paid plan for 24/7 uptime
-- Monitor logs in Render dashboard for any issues
+For the most reliable always-on operation, use a host with persistent disk/storage rather than a sleeping/ephemeral free service.
 
-## License
+## Security
 
-ISC
+Only the configured `WHATSAPP_PHONE_NUMBER` is allowed to use the reminder commands. Keep authentication files private.
